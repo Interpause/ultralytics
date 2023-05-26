@@ -656,15 +656,15 @@ class Albumentations:
             T = [
                 # A.Blur(p=0.01),
                 # A.MedianBlur(p=0.01),
-                A.AdvancedBlur(p=0.15),
+                A.AdvancedBlur(p=0.15, blur_limit=(7, 19), noise_limit=(0.0, 2.0), beta_limit=(0.0, 4.0)),
                 # A.ToGray(p=0.01),
-                A.CLAHE(p=0.05),
-                A.MotionBlur(p=0.1),
+                A.CLAHE(p=0.2),
+                A.MotionBlur(p=0.15, blur_limit=(11, 19)),
                 # A.RandomBrightnessContrast(p=0.0),
                 # A.RandomGamma(p=0.0),
-                A.ImageCompression(quality_lower=75, p=0.2),
-                A.GaussNoise(p=0.3, per_channel=True, var_limit=(30.0, 100.0)),
-                A.ISONoise(p=0.3, intensity=(0.2, 0.7), color_shift=(0.03, 0.1)),
+                A.ImageCompression(p=0.1, quality_lower=20, quality_upper=50),
+                A.GaussNoise(p=0.25, per_channel=True, var_limit=(4999.0, 5000.0)),
+                A.ISONoise(p=0.2, intensity=(0.1, 0.5), color_shift=(0.03, 0.06)),
             ]  # transforms
             self.transform = A.Compose(T, bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
 
@@ -792,8 +792,8 @@ def v8_transforms(dataset, imgsz, hyp):
     return Compose([
         pre_transform,
         MixUp(dataset, pre_transform=pre_transform, p=hyp.mixup),
-        Albumentations(p=1.0),
         RandomHSV(hgain=hyp.hsv_h, sgain=hyp.hsv_s, vgain=hyp.hsv_v),
+        Albumentations(p=1.0),
         RandomFlip(direction='vertical', p=hyp.flipud),
         RandomFlip(direction='horizontal', p=hyp.fliplr, flip_idx=flip_idx)])  # transforms
 
