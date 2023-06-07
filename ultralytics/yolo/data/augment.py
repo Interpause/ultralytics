@@ -656,14 +656,14 @@ class Albumentations:
             T = [
                 # A.Blur(p=0.01),
                 # A.MedianBlur(p=0.01),
-                A.AdvancedBlur(p=0.2, blur_limit=(5, 17), noise_limit=(0.0, 2.0), beta_limit=(0.0, 4.0)),
-                A.ToGray(p=0.2),
-                A.CLAHE(p=0.2),
-                A.MotionBlur(p=0.2, blur_limit=(5, 17)),
                 A.RandomContrast(p=0.2, limit=(0.0, 0.5)),
+                A.AdvancedBlur(p=0.2, blur_limit=(5, 17), noise_limit=(0.0, 2.0), beta_limit=(0.0, 4.0)),
+                A.MotionBlur(p=0.2, blur_limit=(5, 17)),
                 # A.RandomBrightnessContrast(p=0.0),
                 # A.RandomGamma(p=0.0),
+                A.ToGray(p=0.2),
                 A.ImageCompression(p=0.2, quality_lower=20, quality_upper=50),
+                A.CLAHE(p=0.2),
                 A.GaussNoise(p=0.2, per_channel=True, var_limit=(1000.0, 5000.0)),
                 A.ISONoise(p=0.2, intensity=(0.1, 0.5), color_shift=(0.03, 0.06)),
             ]  # transforms
